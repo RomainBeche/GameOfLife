@@ -1,0 +1,91 @@
+sequenceDiagram
+    participant GOL as GameOfLife
+    participant Grid
+    participant Cell
+    participant CS as CellState
+    participant RS as RuleSet
+    participant NS as NewCellState
+
+    Note over GOL,RS: One Generation Update Cycle
+    
+    GOL->>Grid: update()
+    activate Grid
+    
+    Note over Grid,RS: Phase 1: Calculate Next States (for all cells)
+    
+    loop for each cell in grid
+        Grid->>Cell: getX(), getY()
+        activate Cell
+        Cell-->>Grid: x, y coordinates
+        deactivate Cell
+        
+        Grid->>Grid: countNeighbors(x, y)
+        activate Grid
+        
+        Note over Grid: Count live neighbors<br/>around this cell<br/>(handles toric wrapping)
+        
+        loop for each of 8 neighbors
+            Grid->>Grid: calculate neighbor position<br/>(with wraparound if toric)
+            Grid->>Cell: isAlive()
+            activate Cell
+            Cell->>CS: isAlive()
+            activate CS
+            CS-->>Cell: true/false
+            deactivate CS
+            Cell-->>Grid: true/false
+            deactivate Cell
+            Grid->>Grid: increment count if alive
+        end
+        
+        Grid-->>Grid: neighborCount
+        deactivate Grid
+        
+        Note over Grid,RS: Ask RuleSet what this cell should become
+        
+        Grid->>Cell: isAlive()
+        activate Cell
+        Cell->>CS: isAlive()
+        activate CS
+        CS-->>Cell: currentlyAlive
+        deactivate CS
+        Cell-->>Grid: currentlyAlive
+        deactivate Cell
+        
+        Grid->>RS: calculateNextState(currentlyAlive, neighborCount)
+        activate RS
+        
+        Note over RS: Apply Conway's Rules:<br/>- Alive + 2-3 neighbors → stay alive<br/>- Dead + 3 neighbors → become alive<br/>- Otherwise → die
+        
+        RS->>NS: create new CellState<br/>(AliveState or DeadState)
+        activate NS
+        NS-->>RS: newState
+        deactivate NS
+        
+        RS-->>Grid: newState
+        deactivate RS
+        
+        Grid->>Cell: prepareNextState(newState)
+        activate Cell
+        Note over Cell: Store next state<br/>without applying yet
+        Cell-->>Grid: done
+        deactivate Cell
+    end
+    
+    Note over Grid,Cell: Phase 2: Apply Next States (for all cells simultaneously)
+    
+    loop for each cell in grid
+        Grid->>Cell: applyNextState()
+        activate Cell
+        
+        Note over Cell: Replace current state<br/>with next state
+        Cell->>Cell: currentState = nextState
+        Cell->>Cell: nextState = nullptr
+        
+        Cell-->>Grid: done
+        deactivate Cell
+    end
+    
+    Grid-->>GOL: update complete
+    deactivate Grid
+    
+    Note over GOL: Generation complete,<br/>grid is now in next state

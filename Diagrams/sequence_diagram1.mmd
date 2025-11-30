@@ -1,0 +1,91 @@
+---
+config:
+  theme: redux-color
+---
+sequenceDiagram
+    actor User
+    participant Main as main.cpp
+    participant GOL as GameOfLife
+    participant File
+    participant Grid
+    participant Cell
+    participant CS as CellState
+    participant AS as AliveState
+    participant DS as DeadState
+    participant RS as ConwayRuleSet
+    participant Display
+    participant CD as ConsoleDisplay
+    participant GD as GraphicalDisplay
+
+    User->>Main: run program with arguments
+    activate Main
+    Note over Main: Parse command line arguments
+    Main->>Main: parse filename, mode, options
+    Note over Main: Create GameOfLife instance
+    Main->>GOL: create GameOfLife()
+    activate GOL
+    GOL-->>Main: gameOfLife instance
+    Main->>GOL: setFile(filename)
+    Main->>GOL: setMode(mode)
+    Main->>GOL: setMaxGenerations(max)
+    Main->>GOL: setDelay(delay)
+    Main->>GOL: setToric(toric)
+    Note over GOL,RS: Initialize Rule System
+    Main->>RS: create ConwayRuleSet()
+    activate RS
+    RS-->>Main: ruleSet instance
+    deactivate RS
+    Note over Main,Grid: Read File and Create Grid
+    Main->>File: readGrid(ruleSet)
+    activate File
+    File->>File: open and parse input file
+    File->>Grid: create Grid(width, height, ruleSet)
+    activate Grid
+    Grid->>Grid: initialize cells vector
+    Grid-->>File: grid instance
+    Note over File,Cell: Create all Cells from file data
+    loop for each cell in file
+        File->>Cell: create Cell(x, y)
+        activate Cell
+        Cell-->>File: cell instance
+        deactivate Cell
+        alt cell is alive in file
+            File->>AS: create AliveState()
+            activate AS
+            AS-->>File: aliveState
+            deactivate AS
+            File->>Cell: setState(aliveState)
+        else cell is dead in file
+            File->>DS: create DeadState()
+            activate DS
+            DS-->>File: deadState
+            deactivate DS
+            File->>Cell: setState(deadState)
+        end
+        File->>Grid: add cell to cells vector
+    end
+    File-->>GOL: grid instance
+    deactivate File
+    deactivate Grid
+    Main->>GOL: setGrid(grid)
+    Note over Main,Display: Create Display based on mode
+    alt Console Mode
+        Main->>CD: create ConsoleDisplay(outputFolder)
+        activate CD
+        CD->>CD: createOutputFolder()
+        CD-->>Main: display instance
+        deactivate CD
+        Main->>GOL: setDisplay(consoleDisplay)
+    else Graphical Mode
+        Main->>GD: create GraphicalDisplay(width, height, cellSize)
+        activate GD
+        GD->>GD: create RenderWindow
+        GD-->>Main: display instance
+        deactivate GD
+        Main->>GOL: setDisplay(graphicalDisplay)
+    end
+    Note over Main,GOL: Initialization Complete - Ready to Start
+    Main->>GOL: start()
+    Note over GOL: Begin simulation (see next diagram)
+    deactivate GOL
+    deactivate Main

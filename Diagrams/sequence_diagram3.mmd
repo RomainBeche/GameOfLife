@@ -1,0 +1,134 @@
+sequenceDiagram
+    participant Main as main.cpp
+    participant GOL as GameOfLife
+    participant Grid
+    participant Display
+    participant CD as ConsoleDisplay
+    participant GD as GraphicalDisplay
+    participant File
+
+    Note over Main,GOL: After initialization (see Diagram 1)
+    
+    Main->>GOL: start()
+    activate GOL
+    
+    GOL->>GOL: generation = 0
+    GOL->>GOL: hasChanged = true
+    
+    Note over GOL,Display: Main Execution Loop
+    
+    loop while not finished
+        Note over GOL: Check termination conditions
+        
+        GOL->>Display: isOpen()
+        activate Display
+        Display-->>GOL: true/false
+        deactivate Display
+        
+        alt display closed OR max generations reached OR grid stable
+            Note over GOL: Exit loop
+        end
+        
+        Note over GOL,Grid: Display current generation
+        
+        alt Console Mode
+            GOL->>CD: displayGrid(grid)
+            activate CD
+            Note over CD: Console displays to file
+            CD->>File: writeFile(grid, generation)
+            activate File
+            File->>File: create output file<br/>(e.g., "output_1.txt")
+            File->>Grid: textGrid()
+            activate Grid
+            Grid-->>File: text representation
+            deactivate Grid
+            File->>File: write to file
+            File-->>CD: done
+            deactivate File
+            CD-->>GOL: done
+            deactivate CD
+            
+        else Graphical Mode
+            GOL->>GD: displayGrid(grid)
+            activate GD
+            Note over GD: Render grid to window
+            GD->>GD: clear window
+            
+            loop for each cell in grid
+                GD->>Grid: getCell(x, y)
+                activate Grid
+                Grid-->>GD: cell
+                deactivate Grid
+                
+                GD->>Grid: cell.isAlive()
+                activate Grid
+                Grid-->>GD: true/false
+                deactivate Grid
+                
+                alt cell is alive
+                    GD->>GD: draw rectangle at (x, y)
+                end
+            end
+            
+            GD->>GD: display window
+            GD-->>GOL: done
+            deactivate GD
+        end
+        
+        Note over GOL,Display: Handle events (graphical mode only)
+        
+        GOL->>Display: handleEvents()
+        activate Display
+        
+        alt Graphical Mode
+            Display->>Display: poll SFML events<br/>(close window, key press, etc.)
+        else Console Mode
+            Display->>Display: no-op
+        end
+        
+        Display-->>GOL: done
+        deactivate Display
+        
+        Note over GOL,Grid: Update grid to next generation (see Diagram 2)
+        
+        GOL->>Grid: update()
+        activate Grid
+        Note over Grid: Phase 1: Calculate next states<br/>Phase 2: Apply next states<br/>(detailed in Diagram 2)
+        Grid-->>GOL: done
+        deactivate Grid
+        
+        Note over GOL: Check if grid has changed (stability detection)
+        
+        GOL->>Grid: textGrid()
+        activate Grid
+        Grid-->>GOL: currentGridState (as string)
+        deactivate Grid
+        
+        GOL->>GOL: check if currentGridState<br/>exists in previousGrids set
+        
+        alt grid state already seen
+            GOL->>GOL: hasChanged = false
+            Note over GOL: Grid is stable,<br/>will exit next iteration
+        else new state
+            GOL->>GOL: add currentGridState<br/>to previousGrids set
+        end
+        
+        Note over GOL: Increment generation counter
+        GOL->>GOL: generation++
+        
+        Note over GOL: Apply delay (graphical mode only)
+        
+        alt Graphical Mode
+            GOL->>GOL: sleep(delay milliseconds)
+        end
+        
+    end
+    
+    Note over GOL: Simulation Complete
+    
+    GOL-->>Main: execution finished
+    deactivate GOL
+    
+    Main->>Main: cleanup and exit
+    
+    Note over Main: Program endspho

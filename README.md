@@ -8,6 +8,6 @@ This object-oriented programming project consists of designing and then implemen
 
 ### Activity Diagram
 
-### Class Diagram
+### Class Diagrams
 
 ### Sequence Diagram

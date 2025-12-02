@@ -4,9 +4,9 @@
 
 class AliveState : public CellState {
 public:
-    bool isAlive();
-    CellState* clone();
-    char toChar();
+    bool isAlive() override;
+    CellState* clone() override;
+    char toChar() override;
 };
 
 #endif // aliveState.h

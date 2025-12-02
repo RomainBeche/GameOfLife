@@ -1,5 +1,5 @@
-#ifndef ALIVE_STATE.h
-#define ALIVE_STATE.h
+#ifndef ALIVE_STATE_h
+#define ALIVE_STATE_h
 #include "cellState.h"
 
 class AliveState : public CellState {

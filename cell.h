@@ -20,10 +20,10 @@ public:
     void prepareNextState(CellState* state);
     void applyNextState();
     bool isAlive();
-    int getX();
-    int getY();
+    int getX() const;
+    int getY() const;
     void setFixed(bool fixed);
-    bool isFixed();
+    bool isFixed() const;
 };
 
 #endif // cell.h

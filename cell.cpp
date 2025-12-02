@@ -56,9 +56,9 @@ void Cell::applyNextState() {
 bool Cell::isAlive() { return state->isAlive(); }
 
 // Coordinates Getters
-int Cell::getX() { return x; }
-int Cell::getY() { return y; }
+int Cell::getX() const { return x; }
+int Cell::getY() const { return y; }
 
 // fixed setter and getter
 void Cell::setFixed(bool isFixed) { fixed = isFixed; }
-bool Cell::isFixed() { return fixed; }
+bool Cell::isFixed() const { return fixed; }

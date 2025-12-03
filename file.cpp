@@ -11,23 +11,15 @@
 using namespace std::filesystem;
 using std::ostringstream, std::runtime_error, std::ofstream, std::ifstream, std::vector;
 
-File::File()
-    : inputFile(""), outputFolder("output") {}
+File::File() : inputFile(""), outputFolder("output") {}
 
 // Set the input file path
-void File::setInputFile(const string& filename) {
-    inputFile = filename;
-}
+void File::setInputFile(const string& filename) { inputFile = filename; }
 
 // Create the output folder if it doesn't exist
 void File::createOutputFolder() {
-    if (outputFolder.empty()) {
-        outputFolder = "output";
-    }
-
-    if (!exists(outputFolder)) {
-        create_directories(outputFolder);
-    }
+    if (outputFolder.empty()) outputFolder = "output";
+    if (!exists(outputFolder)) create_directories(outputFolder);
 }
 
 // Write the current grid to a text file named generation_X.txt
@@ -43,14 +35,14 @@ void File::writeFile(Grid& grid, int generation) {
         throw runtime_error("Failed to open output file: " + filepath);
     }
 
-    // Use Grid::textGrid() to get a string representation (as per class diagram)
+    // Use Grid::textGrid() to get a string representation
     out << grid.textGrid() << '\n';
 }
 
 // Read initial grid from inputFile and build a Grid using the given RuleSet
 Grid File::readGrid(RuleSet* ruleSet) {
     if (inputFile.empty()) {
-        throw runtime_error("Input file not set.");
+        throw runtime_error("Input file not set");
     }
 
     ifstream in(inputFile);

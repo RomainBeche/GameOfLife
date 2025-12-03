@@ -8,7 +8,7 @@ public:
     virtual void displayGrid(Grid& grid) = 0;
     virtual bool isOpen() = 0;
     virtual void handleEvents() = 0;
-    virtual ~Display() {}
+    virtual ~Display() {} // Display destructor
 };
 
 #endif // DISPLAY_H

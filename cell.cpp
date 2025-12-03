@@ -35,7 +35,7 @@ void Cell::setState(CellState* newState) {
     state = newState; 
 }
 
-// Prepare to apply nextState
+// Prepare nextState
 void Cell::prepareNextState(CellState* newState) { 
     if (nextState != nullptr) {
         delete nextState;
@@ -43,7 +43,7 @@ void Cell::prepareNextState(CellState* newState) {
     nextState = newState;
 }
 
-// Apply state = nextState
+// Apply: state = nextState
 void Cell::applyNextState() { 
     if (nextState != nullptr) {
         delete state;

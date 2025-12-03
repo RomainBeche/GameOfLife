@@ -12,14 +12,12 @@ private:
     int mode;
     Grid grid;
     Display* display;
-    sf::RenderWindow window;
+    sf::RenderWindow* window;
     File file;
     int delay;
     int maxGenerations;
     int generation;
     std::unordered_set<std::string> previousGrids;
-    
-bool checkStability();
 
 public:
     GameOfLife();
@@ -28,7 +26,9 @@ public:
     void setDelay(int ms);
     void setMaxGenerations(int max);
     void setMode(int mode);
+    void setToric(bool toric);
     void start();
 
-    
+private:
+    bool checkStability();
 };

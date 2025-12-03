@@ -1,6 +1,6 @@
 #include "grid.h"
 #include "conwayRuleSet.h"
-#include <exception>
+#include <stdexcept>
 
 // Constructors
 Grid::Grid() : width(0), height(0), toric(false), ruleSet(nullptr) {}

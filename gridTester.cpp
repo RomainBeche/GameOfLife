@@ -6,9 +6,7 @@
 
 bool GridTester::testGrid(Grid initialGrid, Grid& expectedGrid, int iterations) {
     // Evolve the grid 'iterations' times
-    for (int i = 0; i < iterations; ++i) {
-        initialGrid.update();
-    }
+    for (int i = 0; i < iterations; ++i) initialGrid.update();
 
     // Compare dimensions
     if (initialGrid.getWidth() != expectedGrid.getWidth() ||
@@ -19,9 +17,7 @@ bool GridTester::testGrid(Grid initialGrid, Grid& expectedGrid, int iterations) 
     // Compare each cell's alive state
     for (int y = 0; y < static_cast<int>(initialGrid.getHeight()); ++y) {
         for (int x = 0; x < static_cast<int>(initialGrid.getWidth()); ++x) {
-            if (initialGrid.getCell(x, y).isAlive() != expectedGrid.getCell(x, y).isAlive()) {
-                return false;
-            }
+            if (initialGrid.getCell(x, y).isAlive() != expectedGrid.getCell(x, y).isAlive()) return false;
         }
     }
 
@@ -29,12 +25,12 @@ bool GridTester::testGrid(Grid initialGrid, Grid& expectedGrid, int iterations) 
 }
 
 void GridTester::runAllTests() {
-    std::cout << "=== GridTester::runAllTests ===" << std::endl;
+    std::cout << "##### GridTester::runAllTests #####" << std::endl;
 
     ConwayRuleSet rules;
 
     // Example test: blinker oscillator
-    // Generation 0 (horizontal):
+    // Generation 0:
     // 00000
     // 00000
     // 01110
@@ -46,7 +42,7 @@ void GridTester::runAllTests() {
     initial.getCell(2, 2).setState(new AliveState());
     initial.getCell(3, 2).setState(new AliveState());
 
-    // Expected after 1 iteration (vertical):
+    // Expected after 1 iteration:
     // 00000
     // 00100
     // 00100

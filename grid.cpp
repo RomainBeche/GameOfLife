@@ -6,17 +6,19 @@
 Grid::Grid() : width(0), height(0), toric(false), ruleSet(nullptr) {}
 
 Grid::Grid(size_t width, size_t height, RuleSet* rules) : toric(false), ruleSet(rules) { 
-    if (width != 0 && height != 0) {
-        this->width = width;
-        this->height = height;
-        cells.resize(width*height);
-        for (size_t y = 0; y < height; y++) {
-            for (size_t x = 0; x < width; x++) {
-                size_t index = y*width+x;
-                cells[index].initialize(x,y);
+    if (width != 0) {
+        if (height != 0) {
+            this->width = width;
+            this->height = height;
+            cells.resize(width*height);
+            for (size_t y = 0; y < height; y++) {
+                for (size_t x = 0; x < width; x++) {
+                    size_t index = y*width+x;
+                    cells[index].initialize(x,y);
+                }
             }
-        }
-    } else { throw std::invalid_argument("Grid size can't be 0"); }
+        } else { throw invalid_argument("Grid height can't be 0"); } // error if grid height set to 0
+    } else { throw invalid_argument("Grid width can't be 0"); } // error if grid width set to 0
 }
 
 // Destructor
@@ -24,11 +26,13 @@ Grid::~Grid() {}
 
 // Size setter
 void Grid::setSize(size_t width, size_t height) {
-    if (width != 0 && height != 0) {
-        this->width = width;
-        this->height = height;
-        cells.resize(width*height);
-    } else { throw std::invalid_argument("Grid size can't be 0"); } // error if grid size set to 0 by 0
+    if (width != 0) {
+        if (height != 0) {
+            this->width = width;
+            this->height = height;
+            cells.resize(width*height);
+        } else { throw invalid_argument("Grid height can't be 0"); } // error if grid height set to 0
+    } else { throw invalid_argument("Grid width can't be 0"); } // error if grid width set to 0
 }
 
 // Update grid
@@ -45,7 +49,7 @@ void Grid::update() {
 
 // Count neighbors for a cell
 size_t Grid::countNeighbors(int x, int y) {
-    size_t count = 0;  // Initialize!
+    size_t count = 0;
     
     // Check all 8 neighbors
     for (int dy = -1; dy <= 1; dy++) {
@@ -80,19 +84,24 @@ size_t Grid::countNeighbors(int x, int y) {
 }
 
 // Cell getter
-Cell& Grid::getCell(int x, int y) { return ; }
+Cell& Grid::getCell(int x, int y) { 
+    size_t index = y*width+x;
+    return cells[index]; 
+}
 
 // Grid size getters
 size_t Grid::getWidth() const { return width; }
 size_t Grid::getHeight() const { return height; }
 
-// 
+// Toric getter
 bool Grid::isToric() const { return toric; }
 
+// Toric setter
 void Grid::setToric(bool toric) { this->toric = toric; }
 
-std::string Grid::textGrid() {
-    std::string grid;
+// Returns text grid
+string Grid::textGrid() {
+    string grid;
     for (size_t y = 0; y < height; y++) {
         for (size_t x = 0; x < width; x++) {
             size_t index = y*width+x;
@@ -103,4 +112,5 @@ std::string Grid::textGrid() {
     return grid;
 }
 
-void Grid::setRuleSet(RuleSet* rules) {}
+// Rules setter
+void Grid::setRuleSet(RuleSet* rules) { ruleSet = rules; }

@@ -8,6 +8,8 @@
 #include <vector>
 #include <string>
 
+using std::string, std::invalid_argument;
+
 class Grid {
 private:
     size_t width;
@@ -32,4 +34,4 @@ public:
     void setRuleSet(RuleSet* rules);
 };
 
-#endif // grid.h
+#endif // GRID_H

@@ -26,4 +26,4 @@ public:
     bool isFixed() const;
 };
 
-#endif // cell.h
+#endif // CELL_H

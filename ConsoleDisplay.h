@@ -1,20 +1,21 @@
+#ifndef CONSOLE_DISPLAY_H
+#define CONSOLE_DISPLAY_H
+
 #include <iostream>
 #include <string>
-#include "Display.h"
+#include "display.h"
 
 class ConsoleDisplay : public Display {
 private:
-    std::string outputFolder;
+    string outputFolder;
 public:
-    ConsoleDisplay(std::string& folder);
+    ConsoleDisplay(const string& folder);
 
-    void displayGrid(Grid& grid) override {
-        std::cout << grid.textGrid() << std::endl;
-    }
+    void displayGrid(Grid& grid) override;
         
-    bool isOpen() override {
-        return true;
-    }
+    bool isOpen() override;
 
-    void handleEvents() override {}
+    void handleEvents() override;
 };
+
+#endif // CONSOLE_DISPLAY_H

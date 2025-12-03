@@ -6,6 +6,7 @@ public:
     virtual bool isAlive() = 0;
     virtual CellState* clone() = 0;
     virtual char toChar() = 0;
+    virtual ~CellState() {}
 };
 
-#endif // cellState.h
+#endif // CELL_STATE_H

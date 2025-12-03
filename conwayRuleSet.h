@@ -4,7 +4,7 @@
 
 class ConwayRuleSet : public RuleSet {
 public:
-    CellState* calculateNextState(bool currentlyAlive, int neighbors);
+    CellState* calculateNextState(bool currentlyAlive, int neighbors) override;
 };
 
-#endif // conwayRuleSet.h
+#endif // CONWAY_RULE_SET_H

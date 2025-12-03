@@ -1,156 +1,156 @@
 ---
 config:
-  layout: dagre
+  layout: elk
   theme: default
   look: neo
 ---
 classDiagram
-    class GameOfLife {
-        -mode: int
-        -grid: Grid
-        -display: Display*
-        -window: RenderWindow*
-        -file: File
-        -delay: int
-        -maxGenerations: int
-        -generation: int
-        -previousGrids: unordered_set~string~
-        +GameOfLife()
-        +~GameOfLife()
-        +setFile(filename: string)
-        +setDelay(ms: int)
-        +setMaxGenerations(max: int)
-        +setMode(mode: int)
-        +setToric(toric: bool)
-        +start()
-        -checkStability() bool
-    }
-    class Display {
-        <<abstract>>
-        +displayGrid(grid: Grid)* void
-        +isOpen()* bool
-        +handleEvents()* void
-    }
-
-    class ConsoleDisplay {
-        -outputFolder: string
-        +ConsoleDisplay(folder: string)
-        +displayGrid(grid: Grid) void
-        +isOpen() bool
-        +handleEvents() void
-    }
-
-    class GraphicalDisplay {
-        -cellSize: int
-        -window: RenderWindow*
-        +GraphicalDisplay(width: int, height: int, cellSize: int)
-        +~GraphicalDisplay()
-        +displayGrid(grid: Grid) void
-        +setDelay(ms: int)
-        +isOpen() bool
-        +handleEvents() void
-        +getWindow() RenderWindow*
-    }
-
-    class Grid {
-        -width: int
-        -height: int
-        -cells: vector~Cell~
-        -toric: bool
-        -ruleSet: RuleSet*
-        +Grid()
-        +Grid(width: int, height: int, RuleSet* rules)
-        +~Grid()
-        +setSize(width: int, height: int)
-        +update()
-        +countNeighbors(x: int, y: int) int
-        +getCell(x: int, y: int) Cell&
-        +getWidth() int
-        +getHeight() int
-        +isToric() bool
-        +setToric(toric: bool)
-        +textGrid() string
-        +setRuleSet(rules: RuleSet*)
-    }
-
+direction TB
     class Cell {
-        -state: CellState*
-        -nextState: CellState*
-        -fixed: bool
-        -x: int
-        -y: int
-        +Cell()
-        +Cell(x: int, y: int)
-        +~Cell()
-        +initialize(x: int, y: int)
-        +setState(state: CellState*)
-        +prepareNextState(state: CellState*)
-        +applyNextState()
-        +isAlive() bool
-        +getX() int
-        +getY() int
-        +setFixed(fixed: bool)
-        +isFixed() bool
+	    -state: CellState*
+	    -nextState: CellState*
+	    -fixed: bool
+	    -x: int
+	    -y: int
+	    +Cell()
+	    +Cell(x: int, y: int)
+	    +~Cell()
+	    +initialize(x: int, y: int)
+	    +setState(state: CellState*)
+	    +prepareNextState(state: CellState*)
+	    +applyNextState()
+	    +isAlive() bool
+	    +getX() int
+	    +getY() int
+	    +setFixed(fixed: bool)
+	    +isFixed() bool
     }
-    
+
     class CellState {
-        <<abstract>>
-        +isAlive()* bool
-        +clone()* CellState*
-        +toChar()* char
+	    +isAlive() bool*
+	    +clone() CellState**
+	    +toChar() char*
     }
 
     class AliveState {
-        +isAlive() bool
-        +clone() CellState*
-        +toChar() char
+	    +isAlive() bool
+	    +clone() CellState*
+	    +toChar() char
     }
 
     class DeadState {
-        +isAlive() bool
-        +clone() CellState*
-        +toChar() char
+	    +isAlive() bool
+	    +clone() CellState*
+	    +toChar() char
     }
+
     class RuleSet {
-        <<abstract>>
-        +calculateNextState(currentlyAlive: bool, neighbors: int)* CellState*
+	    +calculateNextState(currentlyAlive: bool, neighbors: int) CellState**
     }
 
     class ConwayRuleSet {
-        +calculateNextState(currentlyAlive: bool, neighbors: int) CellState*
+	    +calculateNextState(currentlyAlive: bool, neighbors: int) CellState*
     }
-    
+
     class File {
-        -inputFile: string
-        -outputFolder: string
-        +File()
-        +setInputFile(filename: string)
-        +createOutputFolder()
-        +writeFile(grid: Grid, generation: int)
-        +readGrid(ruleSet: RuleSet*) Grid
+	    -inputFile: string
+	    -outputFolder: string
+	    +File()
+	    +setInputFile(filename: string)
+	    +createOutputFolder()
+	    +writeFile(grid: Grid, generation: int)
+	    +readGrid(ruleSet: RuleSet*) Grid
     }
-    
+
+    class GameOfLife {
+	    -mode: int
+	    -grid: Grid
+	    -display: Display*
+	    -window: RenderWindow*
+	    -file: File
+	    -delay: int
+	    -maxGenerations: int
+	    -generation: int
+	    -previousGrids: unordered_set~string~
+	    +GameOfLife()
+	    +~GameOfLife()
+	    +setFile(filename: string)
+	    +setDelay(ms: int)
+	    +setMaxGenerations(max: int)
+	    +setMode(mode: int)
+	    +setToric(toric: bool)
+	    +start()
+	    -checkStability() bool
+    }
+
     class GridTester {
-        +testGrid(initialGrid: Grid, expectedGrid: Grid, iterations: int)$ bool
-        +runAllTests()$ void
+	    +testGrid(initialGrid: Grid, expectedGrid: Grid, iterations: int) bool$
+	    +runAllTests() void$
     }
-    
+
+    class Grid {
+	    -width: size_t
+	    -height: size_t
+	    -cells: vector~Cell~
+	    -toric: bool
+	    -ruleSet: RuleSet*
+	    +Grid()
+	    +Grid(width: size_t, height: size_t, RuleSet* rules)
+	    +~Grid()
+	    +setSize(width: size_t, height: size_t)
+	    +update()
+	    +countNeighbors(x: int, y: int) size_t
+	    +getCell(x: int, y: int) Cell&
+	    +getWidth() int
+	    +getHeight() int
+	    +isToric() bool
+	    +setToric(toric: bool)
+	    +textGrid() string
+	    +setRuleSet(rules: RuleSet*)
+    }
+
+    class ConsoleDisplay {
+	    -outputFolder: string
+	    +ConsoleDisplay(folder: const string&)
+	    +displayGrid(grid: Grid&) void
+	    +isOpen() bool
+	    +handleEvents() void
+    }
+
+    class GraphicalDisplay {
+	    -cellSize: int
+	    -window: RenderWindow*
+	    -delay: int
+	    +GraphicalDisplay(width: int, height: int, cellSize: int)
+	    +~GraphicalDisplay()
+	    +displayGrid(grid: Grid&) void
+	    +setDelay(ms: int)
+	    +isOpen() bool
+	    +handleEvents() void
+	    +getWindow() RenderWindow*
+    }
+
+    class Display {
+	    +displayGrid(grid: Grid&) void*
+	    +isOpen() bool*
+	    +handleEvents() void*
+	    +~Display()
+    }
+
+	<<abstract>> CellState
+	<<abstract>> RuleSet
+	<<abstract>> Display
+
     GameOfLife o-- Grid : manages
     GameOfLife o-- Display : uses
     GameOfLife o-- File : uses
-    
     Display <|-- ConsoleDisplay : inherits
     Display <|-- GraphicalDisplay : inherits
-    
     Grid *-- Cell : contains
     Grid o-- RuleSet : uses
-    
     Cell o-- CellState : current state
     Cell o-- CellState : next state
-    
     CellState <|-- AliveState : inherits
     CellState <|-- DeadState : inherits
-    
     RuleSet <|-- ConwayRuleSet : inherits
-    
     GridTester ..> Grid : tests

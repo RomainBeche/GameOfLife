@@ -2,19 +2,20 @@
 #define FILE_H
 
 #include <string>
-
 #include "grid.h"
+#include "ruleSet.h"
 
-using std::string;
 class File {
 private:
-    string inputFile;
-    string outputFolder;
+    std::string inputFile;
+    std::string outputFolder;
+
 public:
     File();
-    void setInputFile(string fileName);
+
+    void setInputFile(const std::string& filename);
     void createOutputFolder();
-    void writeFile(Grid grid, int generation);
+    void writeFile(Grid& grid, int generation);
     Grid readGrid(RuleSet* ruleSet);
 };
 

@@ -7,6 +7,7 @@
 
 #include <SFML/Graphics.hpp>
 
+using std::unordered_set;
 class GameOfLife {
 private:
     int mode;
@@ -17,12 +18,12 @@ private:
     int delay;
     int maxGenerations;
     int generation;
-    std::unordered_set<std::string> previousGrids;
+    unordered_set<string> previousGrids;
 
 public:
     GameOfLife();
     ~GameOfLife();
-    void setFile(const std::string& filename);
+    void setFile(const string& filename);
     void setDelay(int ms);
     void setMaxGenerations(int max);
     void setMode(int mode);

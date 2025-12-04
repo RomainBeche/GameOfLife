@@ -44,10 +44,6 @@ direction TB
 	    +toChar() char
     }
 
-    class RuleSet {
-	    +calculateNextState(currentlyAlive: bool, neighbors: int) CellState**
-    }
-
     class ConwayRuleSet {
 	    +calculateNextState(currentlyAlive: bool, neighbors: int) CellState*
     }
@@ -60,27 +56,6 @@ direction TB
 	    +createOutputFolder()
 	    +writeFile(grid: Grid, generation: int)
 	    +readGrid(ruleSet: RuleSet*) Grid
-    }
-
-    class GameOfLife {
-	    -mode: int
-	    -grid: Grid
-	    -display: Display*
-	    -window: RenderWindow*
-	    -file: File
-	    -delay: int
-	    -maxGenerations: int
-	    -generation: int
-	    -previousGrids: unordered_set~string~
-	    +GameOfLife()
-	    +~GameOfLife()
-	    +setFile(filename: string)
-	    +setDelay(ms: int)
-	    +setMaxGenerations(max: int)
-	    +setMode(mode: int)
-	    +setToric(toric: bool)
-	    +start()
-	    -checkStability() bool
     }
 
     class GridTester {
@@ -137,9 +112,35 @@ direction TB
 	    +~Display()
     }
 
+    class GameOfLife {
+	    -mode: int
+	    -grid: Grid
+	    -display: Display*
+	    -window: RenderWindow*
+	    -file: File
+	    -delay: int
+	    -maxGenerations: int
+	    -generation: int
+	    -previousGrid: string
+	    +GameOfLife()
+	    +~GameOfLife()
+	    +setFile(filename: string)
+	    +setDelay(ms: int)
+	    +setMaxGenerations(max: int)
+	    +setMode(mode: int)
+	    +setToric(toric: bool)
+	    +start()
+	    -checkStability() bool
+    }
+
+    class RuleSet {
+	    +~RuleSet()
+	    +calculateNextState(currentlyAlive: bool, neighbors: int) CellState**
+    }
+
 	<<abstract>> CellState
-	<<abstract>> RuleSet
 	<<abstract>> Display
+	<<abstract>> RuleSet
 
     GameOfLife o-- Grid : manages
     GameOfLife o-- Display : uses

@@ -1,6 +1,8 @@
 #include "grid.h"
 #include "conwayRuleSet.h"
+#include "deadState.h"
 #include <stdexcept>
+#include <iostream>
 
 // Constructors
 Grid::Grid() : width(0), height(0), toric(false), ruleSet(nullptr) {}
@@ -14,7 +16,7 @@ Grid::Grid(size_t width, size_t height, RuleSet* rules) : toric(false), ruleSet(
             for (size_t y = 0; y < height; y++) {
                 for (size_t x = 0; x < width; x++) {
                     size_t index = y*width+x;
-                    cells[index].initialize(x,y);
+                    cells[index].initialize(x,y); // init cell position
                 }
             }
         } else { throw invalid_argument("Grid height can't be 0"); } // error if grid height set to 0
@@ -38,13 +40,13 @@ void Grid::setSize(size_t width, size_t height) {
 // Update grid
 void Grid::update() {
     for (Cell& cell : cells) { // prepare nextState on all cells
-        if (cell.isFixed()) { continue; } // ignore if fixed
+        if (cell.isFixed()) continue; // ignore if fixed
         int neighbors = countNeighbors(cell.getX(), cell.getY());
         bool currentlyAlive = cell.isAlive();
         CellState* nextState = ruleSet->calculateNextState(currentlyAlive, neighbors);
         cell.prepareNextState(nextState);
     }
-    for (Cell& cell : cells) { if (!cell.isFixed()) { cell.applyNextState(); }} // Apply nextState on all cells
+    for (Cell& cell : cells) { if (!cell.isFixed()) cell.applyNextState(); } // Apply nextState on all cells
 }
 
 // Count neighbors for a cell
@@ -72,9 +74,7 @@ size_t Grid::countNeighbors(int x, int y) {
             } else {
                 if (nx >= 0 && nx < (int)width && ny >= 0 && ny < (int)height) {
                     size_t index = ny * width + nx;
-                    if (cells[index].isAlive()) {
-                        count++;
-                    }
+                    if (cells[index].isAlive()) count++;
                 }
             }
         }
@@ -100,17 +100,46 @@ bool Grid::isToric() const { return toric; }
 void Grid::setToric(bool toric) { this->toric = toric; }
 
 // Returns text grid
+// string Grid::textGrid() {
+//     string grid;
+//     for (size_t y = 0; y < height; y++) {
+//         for (size_t x = 0; x < width; x++) {
+//             size_t index = y*width+x;
+//             if (cells[index].isAlive()) { grid.append("1"); } else { grid.append("0"); }
+//         }
+//         grid.append("\n");
+//     }
+//     return grid;
+// }
+
 string Grid::textGrid() {
+    std::cout << "textGrid: width=" << width << ", height=" << height << ", cells.size()=" << cells.size() << std::endl;
+    
     string grid;
     for (size_t y = 0; y < height; y++) {
+        std::cout << "  Row " << y << std::endl;
         for (size_t x = 0; x < width; x++) {
             size_t index = y*width+x;
-            if (cells[index].isAlive()) { grid.append("1"); } else { grid.append("0"); }
+            std::cout << "    Cell (" << x << "," << y << ") index=" << index;
+            
+            if (index >= cells.size()) {
+                std::cout << " ERROR: index out of bounds!" << std::endl;
+                throw std::runtime_error("Cell index out of bounds in textGrid()");
+            }
+            
+            std::cout << " calling isAlive()..." << std::endl;
+            if (cells[index].isAlive()) { 
+                grid.append("1"); 
+            } else { 
+                grid.append("0"); 
+            }
+            std::cout << "    isAlive() returned" << std::endl;
         }
         grid.append("\n");
     }
     return grid;
 }
+
 
 // Rules setter
 void Grid::setRuleSet(RuleSet* rules) { ruleSet = rules; }

@@ -4,6 +4,7 @@
 
 class RuleSet {
 public:
+    virtual ~RuleSet() = default;
     virtual CellState* calculateNextState(bool currentlyAlive, int neighbors) = 0;
 };
 

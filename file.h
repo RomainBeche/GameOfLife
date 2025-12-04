@@ -13,7 +13,7 @@ private:
 public:
     File();
 
-    void setInputFile(const std::string& filename);
+    void setInputFile(const string& filename);
     void createOutputFolder();
     void writeFile(Grid& grid, int generation);
     Grid readGrid(RuleSet* ruleSet);

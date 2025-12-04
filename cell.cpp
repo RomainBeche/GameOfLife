@@ -8,9 +8,7 @@ Cell::Cell(int x, int y) : state(nullptr), nextState(nullptr), fixed(false), x(x
 // Destructor
 Cell::~Cell() {
     delete state;
-    if (nextState != nullptr) {
-        delete nextState;
-    }
+    if (nextState != nullptr) delete nextState;
 }
 
 // Init method
@@ -18,9 +16,7 @@ void Cell::initialize(int x, int y) {
     this->x = x;
     this->y = y;
 
-    if (state != nullptr) {
-        delete state;
-    }
+    if (state != nullptr) delete state;
 
     state = new DeadState;
     nextState = nullptr;
@@ -29,17 +25,13 @@ void Cell::initialize(int x, int y) {
 
 // State setter
 void Cell::setState(CellState* newState) { 
-    if (state != nullptr) {
-        delete state;
-    }
+    if (state != nullptr) delete state;
     state = newState; 
 }
 
 // Prepare nextState
 void Cell::prepareNextState(CellState* newState) { 
-    if (nextState != nullptr) {
-        delete nextState;
-    }
+    if (nextState != nullptr) delete nextState;
     nextState = newState;
 }
 

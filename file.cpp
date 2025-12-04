@@ -42,7 +42,7 @@ void File::writeFile(Grid& grid, int generation) {
 // Read initial grid from inputFile and build a Grid using the given RuleSet
 Grid File::readGrid(RuleSet* ruleSet) {
     if (inputFile.empty()) {
-        throw runtime_error("Input file not set");
+        throw runtime_error("Input file not set.");
     }
 
     ifstream in(inputFile);
@@ -80,7 +80,7 @@ Grid File::readGrid(RuleSet* ruleSet) {
             char c = lines[y][x];
 
             Cell& cell = grid.getCell(x, y);
-            if (c == '*') { // Alive
+            if (c == '1') { // Alive
                 cell.setState(new AliveState());
             } else {        // Dead (default for any other char)
                 cell.setState(new DeadState());

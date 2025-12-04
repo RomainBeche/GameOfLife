@@ -8,19 +8,21 @@
 #include <vector>
 #include <string>
 
-using std::string, std::invalid_argument;
+using std::string, std::invalid_argument, std::vector;
 
 class Grid {
 private:
     size_t width;
     size_t height;
-    std::vector<Cell> cells;
+    vector<Cell> cells;
     bool toric;
     RuleSet* ruleSet;
 
 public:
     Grid();
     Grid(size_t width, size_t height, RuleSet* rules);
+    Grid(const Grid& other);                // Copy constructor
+    Grid& operator=(const Grid& other);     // Copy assignment
     ~Grid();
     void setSize(size_t width, size_t height);
     void update();
@@ -30,7 +32,7 @@ public:
     size_t getHeight() const;
     bool isToric() const;
     void setToric(bool toric);
-    std::string textGrid();
+    string textGrid();
     void setRuleSet(RuleSet* rules);
 };
 

@@ -12,7 +12,7 @@ using std::cerr, std::cout, std::endl, std::stoi, std::exception;
 void printUsage() {
     cout << "Usage: ./exec <input_file> [options]" << endl;
     cout << "Options:" << endl;
-    cout << "  --mode <0|1>        0: console (default), 1: graphical" << endl;
+    cout << "  --mode <0|1>        0: console, 1: graphical (default)" << endl;
     cout << "  --toric <0|1>       0: non-toric (default), 1: toric" << endl;
     cout << "  --delay <ms>        Delay between iterations (default: 500ms)" << endl;
     cout << "  --max-gen <n>       Maximum generations (default: 1000)" << endl;
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
     
     // Parse command line arguments
     string inputFile = argv[1];
-    int mode = 0;
+    int mode = 1;
     bool toric = false;
     int delay = 500;
     int maxGen = 1000;

@@ -1,5 +1,6 @@
 #include "grid.h"
 #include "conwayRuleSet.h"
+#include "aliveState.h"
 #include "deadState.h"
 #include <stdexcept>
 #include <iostream>
@@ -21,6 +22,55 @@ Grid::Grid(size_t width, size_t height, RuleSet* rules) : toric(false), ruleSet(
             }
         } else { throw invalid_argument("Grid height can't be 0"); } // error if grid height set to 0
     } else { throw invalid_argument("Grid width can't be 0"); } // error if grid width set to 0
+}
+
+// Copy Constructor (needed for the gridTester class)
+Grid::Grid(const Grid& other) : width(other.width), height(other.height), toric(other.toric), ruleSet(other.ruleSet) {
+    
+    cells.resize(width * height);
+    
+    for (size_t i = 0; i < cells.size(); ++i) {
+        const Cell& otherCell = other.cells[i];
+        
+        cells[i].initialize(otherCell.getX(), otherCell.getY());
+        
+        // Deep copy the state
+        if (otherCell.isAlive()) {
+            cells[i].setState(new AliveState());
+        } else {
+            cells[i].setState(new DeadState());
+        }
+        
+        cells[i].setFixed(otherCell.isFixed());
+    }
+}
+
+// Copy Assignment Operator (needed for the gridTester class)
+Grid& Grid::operator=(const Grid& other) {
+    if (this != &other) {  // Check for self-assignment
+        width = other.width;
+        height = other.height;
+        toric = other.toric;
+        ruleSet = other.ruleSet;
+        
+        cells.clear();
+        cells.resize(width * height);
+        
+        for (size_t i = 0; i < cells.size(); ++i) {
+            const Cell& otherCell = other.cells[i];
+            
+            cells[i].initialize(otherCell.getX(), otherCell.getY());
+            
+            if (otherCell.isAlive()) {
+                cells[i].setState(new AliveState());
+            } else {
+                cells[i].setState(new DeadState());
+            }
+            
+            cells[i].setFixed(otherCell.isFixed());
+        }
+    }
+    return *this;
 }
 
 // Destructor
@@ -100,46 +150,17 @@ bool Grid::isToric() const { return toric; }
 void Grid::setToric(bool toric) { this->toric = toric; }
 
 // Returns text grid
-// string Grid::textGrid() {
-//     string grid;
-//     for (size_t y = 0; y < height; y++) {
-//         for (size_t x = 0; x < width; x++) {
-//             size_t index = y*width+x;
-//             if (cells[index].isAlive()) { grid.append("1"); } else { grid.append("0"); }
-//         }
-//         grid.append("\n");
-//     }
-//     return grid;
-// }
-
 string Grid::textGrid() {
-    std::cout << "textGrid: width=" << width << ", height=" << height << ", cells.size()=" << cells.size() << std::endl;
-    
     string grid;
     for (size_t y = 0; y < height; y++) {
-        std::cout << "  Row " << y << std::endl;
         for (size_t x = 0; x < width; x++) {
             size_t index = y*width+x;
-            std::cout << "    Cell (" << x << "," << y << ") index=" << index;
-            
-            if (index >= cells.size()) {
-                std::cout << " ERROR: index out of bounds!" << std::endl;
-                throw std::runtime_error("Cell index out of bounds in textGrid()");
-            }
-            
-            std::cout << " calling isAlive()..." << std::endl;
-            if (cells[index].isAlive()) { 
-                grid.append("1"); 
-            } else { 
-                grid.append("0"); 
-            }
-            std::cout << "    isAlive() returned" << std::endl;
+            if (cells[index].isAlive()) { grid.append("1"); } else { grid.append("0"); }
         }
         grid.append("\n");
     }
     return grid;
 }
-
 
 // Rules setter
 void Grid::setRuleSet(RuleSet* rules) { ruleSet = rules; }

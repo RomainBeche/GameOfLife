@@ -6,10 +6,9 @@
 class GridTester {
 public:
     // Compare a grid evolved 'iterations' times to an expected grid
-    static bool testGrid(Grid initialGrid, Grid& expectedGrid, int iterations);
+    static bool testGrid(Grid& initialGrid, Grid& expectedGrid, int iterations);
 
-    // Run basic tests and print the results
-    static void runAllTests();
+    static void runAllTests();  // Run basic tests and print the results
 };
 
 #endif // GRIDTESTER_H

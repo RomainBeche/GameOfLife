@@ -45,7 +45,7 @@ void Cell::applyNextState() {
 }
 
 // Cell state getter
-bool Cell::isAlive() { return state->isAlive(); }
+bool Cell::isAlive() const { return state->isAlive(); }
 
 // Coordinates Getters
 int Cell::getX() const { return x; }

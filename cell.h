@@ -19,7 +19,7 @@ public:
     void setState(CellState* state);
     void prepareNextState(CellState* state);
     void applyNextState();
-    bool isAlive();
+    bool isAlive() const;
     int getX() const;
     int getY() const;
     void setFixed(bool fixed);

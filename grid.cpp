@@ -43,7 +43,7 @@ Grid::Grid(const Grid& other)
     }
 }
 
-// Copy Assignment Operator (needed for the gridTester class)
+// Copy Assignment Operator (also needed for the gridTester class)
 Grid& Grid::operator=(const Grid& other) {
     if (this != &other) {
         width = other.width;
@@ -102,9 +102,7 @@ size_t Grid::countNeighbors(int x, int y) {
     // Check all 8 neighbors
     for (int dy = -1; dy <= 1; dy++) {
         for (int dx = -1; dx <= 1; dx++) {
-            if (dx == 0 && dy == 0) {
-                continue;
-            }
+            if (dx == 0 && dy == 0) continue;
             
             int nx = x + dx;
             int ny = y + dy;
@@ -114,9 +112,7 @@ size_t Grid::countNeighbors(int x, int y) {
                 ny = (ny + height) % height;
                 
                 size_t index = ny * width + nx;
-                if (cells[index].isAlive()) {
-                    count++;
-                }
+                if (cells[index].isAlive()) count++;
             } else {
                 if (nx >= 0 && nx < (int)width && ny >= 0 && ny < (int)height) {
                     size_t index = ny * width + nx;

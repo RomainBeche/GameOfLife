@@ -39,9 +39,7 @@ void File::writeFile(Grid& grid, int generation) {
 
 // Read initial grid from inputFile and build a Grid using the given RuleSet
 Grid File::readGrid(RuleSet* ruleSet) {
-    if (inputFile.empty()) {
-        throw runtime_error("Input file not set.");
-    }
+    if (inputFile.empty()) throw runtime_error("Input file not set.");
 
     ifstream in(inputFile);
     if (!in) throw runtime_error("Failed to open input file: " + inputFile);
@@ -49,12 +47,8 @@ Grid File::readGrid(RuleSet* ruleSet) {
     vector<string> lines;
     string line;
     while (getline(in, line)) {
-        if (!line.empty() && line.back() == '\r') {
-            line.pop_back(); // Handle Windows line endings
-        }
-        if (!line.empty()) {
-            lines.push_back(line);
-        }
+        if (!line.empty() && line.back() == '\r') line.pop_back(); // Handle Windows line endings
+        if (!line.empty()) lines.push_back(line);
     }
 
     if (lines.empty()) throw runtime_error("Input file is empty: " + inputFile);

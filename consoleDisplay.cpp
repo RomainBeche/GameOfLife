@@ -3,8 +3,8 @@
 ConsoleDisplay::ConsoleDisplay(const std::string& folder) : outputFolder(folder) {} // Constructor
 
 // Display the grid using textGrid() method
-void ConsoleDisplay::displayGrid(Grid& grid) {} // Nothing to display in console
+void ConsoleDisplay::displayGrid(Grid& grid) {} // No grid to display in console
 
-bool ConsoleDisplay::isOpen() { return true; }
+bool ConsoleDisplay::isOpen() { return true; } // No renderWindow here so always open
 
 void ConsoleDisplay::handleEvents() {} // Empty method here because not relevant to implement

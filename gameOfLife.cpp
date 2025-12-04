@@ -17,19 +17,19 @@ GameOfLife::GameOfLife()
 // Destructor
 GameOfLife::~GameOfLife() {}
 
-// Configuration methods
+// Setters
 void GameOfLife::setFile(const string& filename) {
     if (file == nullptr) file = new File();
     file->setInputFile(filename);
 }
 
-void GameOfLife::setDelay(int ms) { if (ms >= 0) delay = ms; }
+void GameOfLife::setDelay(int ms) { if (ms >= 0) delay = ms; } // Delay in milliseconds
 
 void GameOfLife::setMaxGenerations(int max) { if (max > 0) maxGenerations = max; }
 
-void GameOfLife::setGrid(Grid* g) { grid = g; }
+void GameOfLife::setGrid(Grid* g) { grid = g; } // Grid Setter
 
-void GameOfLife::setMode(int m) { if (m == 0 || m == 1) mode = m; }
+void GameOfLife::setMode(int m) { if (m == 0 || m == 1) mode = m; } // 0: console, 1: graphical
 
 void GameOfLife::setToric(bool toric) { if (grid != nullptr) grid->setToric(toric); }
 
@@ -37,7 +37,6 @@ void GameOfLife::setDisplay(Display* d) { display = d; }
 
 // Getters
 Grid* GameOfLife::getGrid() { return grid; }
-
 int GameOfLife::getGeneration() const { return generation; }
 
 // Check if grid has stabilized

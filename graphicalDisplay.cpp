@@ -5,7 +5,6 @@ using sf::VideoMode, sf::Color, sf::RectangleShape, sf::sleep, sf::milliseconds,
 
 // Constructor
 GraphicalDisplay::GraphicalDisplay(int width, int height, int cellSize) : cellSize(cellSize), delay(500) {
-    
     // Create the SFML window (SFML 3.0 change)
     int windowWidth = width * cellSize;
     int windowHeight = height * cellSize;
@@ -27,14 +26,14 @@ GraphicalDisplay::~GraphicalDisplay() {
 
 
 void GraphicalDisplay::displayGrid(Grid& grid) {
-    window->clear(Color::Black);
+    window->clear(Color::Black);    // Set background color as black
     
-    // Init ailve cells shapes
+    // Initialize alive cell shapes
     RectangleShape aliveCell({static_cast<float>(cellSize - 1), 
                                    static_cast<float>(cellSize - 1)});
     aliveCell.setFillColor(Color::White);
     
-    // Init grid lines
+    // Initialize grid lines
     RectangleShape gridLine;
     gridLine.setFillColor(Color(40, 40, 40));
     
@@ -76,9 +75,9 @@ void GraphicalDisplay::handleEvents() {
     while (const optional event = window->pollEvent()) {
         if (event->is<Event::Closed>()) window->close(); // Close window properly
         
-        // Key pressed detection
+        // Key press detection
         if (const auto* keyPressed = event->getIf<Event::KeyPressed>()) {
-            // If escape key pressed: close window
+            // If escape key press: close window
             if (keyPressed->scancode == sf::Keyboard::Scancode::Escape) window->close();
         }
     }

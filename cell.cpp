@@ -7,7 +7,8 @@ Cell::Cell(int x, int y) : state(nullptr), nextState(nullptr), fixed(false), x(x
 
 // Destructor
 Cell::~Cell() {
-    delete state;
+    // To avoid memory leaks
+    delete state; 
     if (nextState != nullptr) delete nextState;
 }
 
@@ -19,7 +20,7 @@ void Cell::initialize(int x, int y) {
     if (state != nullptr) delete state;
 
     state = new DeadState;
-    nextState = nullptr;
+    nextState = nullptr; 
     fixed = false;
 }
 
@@ -44,15 +45,15 @@ void Cell::applyNextState() {
     }
 }
 
-// Cell state getter
+// Cell state getter (returns boolean)
 bool Cell::isAlive() const { return state->isAlive(); }
 
 // Coordinates Getters
 int Cell::getX() const { return x; }
 int Cell::getY() const { return y; }
 
-CellState* Cell::getState() const { return state; }
+CellState* Cell::getState() const { return state; } // Access the actual CellState object
 
-// fixed setter and getter
+// Fixed setter and getter
 void Cell::setFixed(bool isFixed) { fixed = isFixed; }
 bool Cell::isFixed() const { return fixed; }

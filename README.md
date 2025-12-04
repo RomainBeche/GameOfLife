@@ -36,15 +36,16 @@ This object-oriented programming project consists of designing and then implemen
     cd build
     cmake ..
     make
-    
-    # Copy or create input.txt in the build directory
-    cp ../input.txt .
-    
-    # Run the simulation
-    ./GameOfLife
-    
     ```
+
+Place the glider.txt or flicker.txt in the build directory or [create your own input.txt file](Input File Format)
     
+Then, run the simulation (example):
+
+    ```bash
+    ./GameOfLife glider.txt --mode 1 --cell-size 10 --delay 500  --max-gen 1000
+    ```
+
 
 ### Windows (Visual Studio / MSVC)
 
@@ -58,7 +59,8 @@ This object-oriented programming project consists of designing and then implemen
     
     ```bash
     cd GameOfLife
-    mkdir build && cd build
+    mkdir build
+    cd build
     cmake -DSFML_DIR="C:\\SFML-3.0.0\\lib\\cmake\\SFML" ..
     cmake --build . --config Release
     
@@ -75,8 +77,8 @@ This object-oriented programming project consists of designing and then implemen
 
 Create an `input.txt` file with the initial grid state:
 
-- 1 = alive cell
-- 0 = dead cell
+- 1: alive cell
+- 0: dead cell
 
 Example with a flicker:
 
@@ -92,7 +94,7 @@ Example with a flicker:
 In the context of our project, we were tasked to implement a way of testing the grid class. To address this concern, we added a separate ```GridTests``` executable in the ```CMakeLists.txt``` specifically for grid testing purposes.
 
 **To run this executable**
-```
+```bash
 cd build
 cmake ..
 make ./GridTests
@@ -119,7 +121,7 @@ brew upgrade cmake
 
 - macOS: Restart VSCode after updating `includePath`
 - All platforms: Try clean rebuild:
-```
+```bash
 cd build
 rm -rf *
 cmake ..

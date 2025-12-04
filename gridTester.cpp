@@ -4,6 +4,8 @@
 #include "deadState.h"
 #include <iostream>
 
+using std::cout, std::endl;
+
 bool GridTester::testGrid(Grid initialGrid, Grid& expectedGrid, int iterations) {
     // Evolve the grid 'iterations' times
     for (int i = 0; i < iterations; ++i) initialGrid.update();
@@ -25,7 +27,7 @@ bool GridTester::testGrid(Grid initialGrid, Grid& expectedGrid, int iterations) 
 }
 
 void GridTester::runAllTests() {
-    std::cout << "##### GridTester::runAllTests #####" << std::endl;
+    cout << "##### GridTester::runAllTests #####" << endl;
 
     ConwayRuleSet rules;
 
@@ -55,9 +57,9 @@ void GridTester::runAllTests() {
     expected1.getCell(2, 3).setState(new AliveState());
 
     bool ok1 = testGrid(initial, expected1, 1);
-    std::cout << "Blinker test (1 iteration): " << (ok1 ? "OK" : "FAIL") << std::endl;
+    cout << "Blinker test (1 iteration): " << (ok1 ? "OK" : "FAIL") << endl;
 
     // Expected after 2 iterations: back to initial
     bool ok2 = testGrid(initial, initial, 2);
-    std::cout << "Blinker test (2 iterations): " << (ok2 ? "OK" : "FAIL") << std::endl;
+    cout << "Blinker test (2 iterations): " << (ok2 ? "OK" : "FAIL") << endl;
 }

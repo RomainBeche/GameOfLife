@@ -1,98 +1,92 @@
 #include "gameOfLife.h"
-#include "grid.h"
-#include <thread>
-#include <chrono>
+#include <iostream>
 
+using std::cerr, std::cout, std::endl;
+
+// Constructor
 GameOfLife::GameOfLife()
     : mode(0),          
       grid(nullptr),           
       display(nullptr),
-      window(nullptr),
       file(nullptr),
-      delay(0),
-      maxGenerations(0),
+      delay(500),
       generation(0),
-      previousGrids()
-{
-}
+      maxGenerations(1000)
+{}
 
-GameOfLife::~GameOfLife() = default;
+// Destructor
+GameOfLife::~GameOfLife() {}
 
-void GameOfLife::setFile(const std::string& filename) {
-    if (file == nullptr) {
-        file = new File();
-    }
+// Configuration methods
+void GameOfLife::setFile(const string& filename) {
+    if (file == nullptr) file = new File();
     file->setInputFile(filename);
 }
 
-void GameOfLife::setDelay(int ms) {
-    delay = ms;
-}
+void GameOfLife::setDelay(int ms) { if (ms >= 0) delay = ms; }
 
+void GameOfLife::setMaxGenerations(int max) { if (max > 0) maxGenerations = max; }
 
-void GameOfLife::setMaxGenerations(int max) {
-    maxGenerations = max;
-}
+void GameOfLife::setGrid(Grid* g) { grid = g; }
 
-void GameOfLife::setMode(int m) {
-    mode = m;
-}
+void GameOfLife::setMode(int m) { if (m == 0 || m == 1) mode = m; }
 
+void GameOfLife::setToric(bool toric) { if (grid != nullptr) grid->setToric(toric); }
+
+void GameOfLife::setDisplay(Display* d) { display = d; }
+
+// Getters
+Grid* GameOfLife::getGrid() { return grid; }
+
+int GameOfLife::getGeneration() const { return generation; }
+
+// Check if grid has stabilized
 bool GameOfLife::checkStability() {
-    std::string current = grid->textGrid();
-    auto result = previousGrids.insert(current);
-    if (result.second == false) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
-void GameOfLife::setToric(bool toric) {
-grid->setToric(toric);
+    string currentGrid = grid->textGrid();
+    if (currentGrid == previousGrid) return true;   // Grid hasn't changed from last generation
+    previousGrid = currentGrid;                     // Store current state for next iteration
+    return false;
 }
     
 void GameOfLife::start() {
+    if (grid == nullptr || display == nullptr) {
+        cerr << "Error: Grid or Display not initialized" << endl;
+        return;
+    }
 
     generation = 0;
+    previousGrid = "";
 
-    previousGrids.clear();
+    cout << "Starting Game of Life..." << endl;
+    cout << "Mode: " << (mode == 0 ? "Console" : "Graphical") << endl;
+    cout << "Grid size: " << grid->getWidth() << "x" << grid->getHeight() << endl;
+    cout << "Max generations: " << maxGenerations << endl;
 
-    bool stop = false;
-
-    while (stop == false) {
-
-        display->displayGrid(*grid);
-        display->handleEvents();
-
-        bool open = display->isOpen();
-        if (open == false) {
-            stop = true;
-        }
-
-        if (stop == false) {
-            if (maxGenerations > 0) {
-                if (generation >= maxGenerations) {
-                    stop = true;
-                }
-            }
-        }
-        if (stop == false) {
-            bool stable = checkStability();
-            if (stable == true) {
-                stop = true;
-            }
-        }
-        if (stop == false) {
-            grid->update();
-            generation = generation + 1;
-        }
-
-            std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+    // Main loop
+    while (display->isOpen()) {
+        // Check termination conditions
+        if (generation >= maxGenerations) break;
         
+        if (checkStability()) {
+            cout << "Grid stabilized at generation " << generation << endl;
+            break;
+        }
+        
+        display->displayGrid(*grid);    // Display current generation
+        display->handleEvents();        // Handle events (window close, keyboard input, etc.)
+        
+        
+        if (mode == 0 && file != nullptr) file->writeFile(*grid, generation); // Console mode: write to file
+        
+        grid->update(); // Update grid to next generation
+        
+        generation++;   // Increment generation counter
+        
+        // Display progress (console mode)
+        if (mode == 0 && generation % 10 == 0) {
+            cout << "Generation: " << generation << endl;
+        }
     }
+    
+    cout << "Simulation ended at generation " << generation << endl;
 }
-
-
-

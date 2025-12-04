@@ -51,6 +51,8 @@ bool Cell::isAlive() const { return state->isAlive(); }
 int Cell::getX() const { return x; }
 int Cell::getY() const { return y; }
 
+CellState* Cell::getState() const { return state; }
+
 // fixed setter and getter
 void Cell::setFixed(bool isFixed) { fixed = isFixed; }
 bool Cell::isFixed() const { return fixed; }

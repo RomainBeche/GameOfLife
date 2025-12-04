@@ -25,7 +25,8 @@ Grid::Grid(size_t width, size_t height, RuleSet* rules) : toric(false), ruleSet(
 }
 
 // Copy Constructor (needed for the gridTester class)
-Grid::Grid(const Grid& other) : width(other.width), height(other.height), toric(other.toric), ruleSet(other.ruleSet) {
+Grid::Grid(const Grid& other) 
+    : width(other.width), height(other.height), toric(other.toric), ruleSet(other.ruleSet) {
     
     cells.resize(width * height);
     
@@ -34,11 +35,8 @@ Grid::Grid(const Grid& other) : width(other.width), height(other.height), toric(
         
         cells[i].initialize(otherCell.getX(), otherCell.getY());
         
-        // Deep copy the state
-        if (otherCell.isAlive()) {
-            cells[i].setState(new AliveState());
-        } else {
-            cells[i].setState(new DeadState());
+        if (otherCell.getState() != nullptr) {
+            cells[i].setState(otherCell.getState()->clone());
         }
         
         cells[i].setFixed(otherCell.isFixed());
@@ -47,7 +45,7 @@ Grid::Grid(const Grid& other) : width(other.width), height(other.height), toric(
 
 // Copy Assignment Operator (needed for the gridTester class)
 Grid& Grid::operator=(const Grid& other) {
-    if (this != &other) {  // Check for self-assignment
+    if (this != &other) {
         width = other.width;
         height = other.height;
         toric = other.toric;
@@ -61,10 +59,8 @@ Grid& Grid::operator=(const Grid& other) {
             
             cells[i].initialize(otherCell.getX(), otherCell.getY());
             
-            if (otherCell.isAlive()) {
-                cells[i].setState(new AliveState());
-            } else {
-                cells[i].setState(new DeadState());
+            if (otherCell.getState() != nullptr) {
+                cells[i].setState(otherCell.getState()->clone());
             }
             
             cells[i].setFixed(otherCell.isFixed());
@@ -155,7 +151,7 @@ string Grid::textGrid() {
     for (size_t y = 0; y < height; y++) {
         for (size_t x = 0; x < width; x++) {
             size_t index = y*width+x;
-            if (cells[index].isAlive()) { grid.append("1"); } else { grid.append("0"); }
+            grid.append(1, cells[index].isAlive());
         }
         grid.append("\n");
     }

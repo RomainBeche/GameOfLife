@@ -6,26 +6,6 @@ config:
 ---
 classDiagram
 direction TB
-    class Cell {
-	    -state: CellState*
-	    -nextState: CellState*
-	    -fixed: bool
-	    -x: int
-	    -y: int
-	    +Cell()
-	    +Cell(x: int, y: int)
-	    +~Cell()
-	    +initialize(x: int, y: int)
-	    +setState(state: CellState*)
-	    +prepareNextState(state: CellState*)
-	    +applyNextState()
-	    +isAlive() bool
-	    +getX() int
-	    +getY() int
-	    +setFixed(fixed: bool)
-	    +isFixed() bool
-    }
-
     class CellState {
 	    +isAlive() bool*
 	    +clone() CellState**
@@ -61,27 +41,6 @@ direction TB
     class GridTester {
 	    +testGrid(initialGrid: Grid, expectedGrid: Grid, iterations: int) bool$
 	    +runAllTests() void$
-    }
-
-    class Grid {
-	    -width: size_t
-	    -height: size_t
-	    -cells: vector~Cell~
-	    -toric: bool
-	    -ruleSet: RuleSet*
-	    +Grid()
-	    +Grid(width: size_t, height: size_t, RuleSet* rules)
-	    +~Grid()
-	    +setSize(width: size_t, height: size_t)
-	    +update()
-	    +countNeighbors(x: int, y: int) size_t
-	    +getCell(x: int, y: int) Cell&
-	    +getWidth() int
-	    +getHeight() int
-	    +isToric() bool
-	    +setToric(toric: bool)
-	    +textGrid() string
-	    +setRuleSet(rules: RuleSet*)
     }
 
     class ConsoleDisplay {
@@ -136,6 +95,50 @@ direction TB
     class RuleSet {
 	    +~RuleSet()
 	    +calculateNextState(currentlyAlive: bool, neighbors: int) CellState**
+    }
+
+    class Cell {
+	    -state: CellState*
+	    -nextState: CellState*
+	    -fixed: bool
+	    -x: int
+	    -y: int
+	    +Cell()
+	    +Cell(x: int, y: int)
+	    +~Cell()
+	    +initialize(x: int, y: int)
+	    +setState(state: CellState*)
+	    +prepareNextState(state: CellState*)
+	    +applyNextState()
+	    +isAlive() bool
+	    +getX() int
+	    +getY() int
+	    +getState() CellState*
+	    +setFixed(fixed: bool)
+	    +isFixed() bool
+    }
+
+    class Grid {
+	    -width: size_t
+	    -height: size_t
+	    -cells: vector~Cell~
+	    -toric: bool
+	    -ruleSet: RuleSet*
+	    +Grid()
+	    +Grid(width: size_t, height: size_t, RuleSet* rules)
+	    +Grid(other: Grid&)
+	    +operator=(other: Grid&)
+	    +~Grid()
+	    +setSize(width: size_t, height: size_t)
+	    +update()
+	    +countNeighbors(x: int, y: int) size_t
+	    +getCell(x: int, y: int) Cell&
+	    +getWidth() int
+	    +getHeight() int
+	    +isToric() bool
+	    +setToric(toric: bool)
+	    +textGrid() string
+	    +setRuleSet(rules: RuleSet*)
     }
 
 	<<abstract>> CellState

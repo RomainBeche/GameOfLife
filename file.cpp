@@ -31,9 +31,7 @@ void File::writeFile(Grid& grid, int generation) {
     const string filepath = oss.str();
 
     ofstream out(filepath);
-    if (!out) {
-        throw runtime_error("Failed to open output file: " + filepath);
-    }
+    if (!out) throw runtime_error("Failed to open output file: " + filepath);
 
     // Use Grid::textGrid() to get a string representation
     out << grid.textGrid() << '\n';
@@ -46,9 +44,7 @@ Grid File::readGrid(RuleSet* ruleSet) {
     }
 
     ifstream in(inputFile);
-    if (!in) {
-        throw runtime_error("Failed to open input file: " + inputFile);
-    }
+    if (!in) throw runtime_error("Failed to open input file: " + inputFile);
 
     vector<string> lines;
     string line;
@@ -61,9 +57,7 @@ Grid File::readGrid(RuleSet* ruleSet) {
         }
     }
 
-    if (lines.empty()) {
-        throw runtime_error("Input file is empty: " + inputFile);
-    }
+    if (lines.empty()) throw runtime_error("Input file is empty: " + inputFile);
 
     const int height = static_cast<int>(lines.size());
     const int width = static_cast<int>(lines[0].size());

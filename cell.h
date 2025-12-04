@@ -22,6 +22,7 @@ public:
     bool isAlive() const;
     int getX() const;
     int getY() const;
+    CellState* getState() const;
     void setFixed(bool fixed);
     bool isFixed() const;
 };

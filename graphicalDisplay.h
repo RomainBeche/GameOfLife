@@ -5,10 +5,12 @@
 #include "grid.h"
 #include <SFML/Graphics.hpp>
 
+using sf::RenderWindow;
+
 class GraphicalDisplay : public Display {
 private:
     int cellSize;
-    sf::RenderWindow* window;
+    RenderWindow* window;
     int delay;  // Delay in milliseconds between frames
 
 public:
@@ -25,7 +27,7 @@ public:
     
     // Additional methods
     void setDelay(int ms);
-    sf::RenderWindow* getWindow();
+    RenderWindow* getWindow();
 };
 
 #endif

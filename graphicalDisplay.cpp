@@ -1,7 +1,7 @@
 #include "graphicalDisplay.h"
 #include <iostream>
 
-using sf::RenderWindow, sf::VideoMode, sf::Color, sf::RectangleShape, sf::sleep, sf::milliseconds, sf::Event, std::optional;
+using sf::VideoMode, sf::Color, sf::RectangleShape, sf::sleep, sf::milliseconds, sf::Event, std::optional;
 
 // Constructor
 GraphicalDisplay::GraphicalDisplay(int width, int height, int cellSize) : cellSize(cellSize), delay(500) {

@@ -8,6 +8,8 @@
 #include <SFML/Graphics.hpp>
 
 using std::unordered_set;
+using std::string;  
+
 class GameOfLife {
 private:
     int mode;
@@ -33,3 +35,4 @@ public:
 private:
     bool checkStability();
 };
+

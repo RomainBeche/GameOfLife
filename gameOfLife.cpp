@@ -1,12 +1,14 @@
 #include "gameOfLife.h"
 #include "grid.h"
+#include <thread>
+#include <chrono>
 
 GameOfLife::GameOfLife()
     : mode(0),          
-      grid(),           
+      grid(nullptr),           
       display(nullptr),
       window(nullptr),
-      file(),
+      file(nullptr),
       delay(0),
       maxGenerations(0),
       generation(0),
@@ -17,7 +19,10 @@ GameOfLife::GameOfLife()
 GameOfLife::~GameOfLife() = default;
 
 void GameOfLife::setFile(const std::string& filename) {
-    file.setInputFile(filename);
+    if (file == nullptr) {
+        file = new File();
+    }
+    file->setInputFile(filename);
 }
 
 void GameOfLife::setDelay(int ms) {
@@ -34,7 +39,7 @@ void GameOfLife::setMode(int m) {
 }
 
 bool GameOfLife::checkStability() {
-    std::string current = grid.textGrid();
+    std::string current = grid->textGrid();
     auto result = previousGrids.insert(current);
     if (result.second == false) {
         return true;
@@ -45,7 +50,7 @@ bool GameOfLife::checkStability() {
 }
 
 void GameOfLife::setToric(bool toric) {
-grid->setToric(Toric);
+grid->setToric(toric);
 }
     
 void GameOfLife::start() {
@@ -58,7 +63,7 @@ void GameOfLife::start() {
 
     while (stop == false) {
 
-        display->displayGrid(grid);
+        display->displayGrid(*grid);
         display->handleEvents();
 
         bool open = display->isOpen();
@@ -80,13 +85,14 @@ void GameOfLife::start() {
             }
         }
         if (stop == false) {
-            grid.update();
+            grid->update();
             generation = generation + 1;
         }
 
-        // 7) Si tu veux un délai entre les générations, tu pourras l'ajouter ici
-        //    (par exemple avec std::this_thread::sleep_for), mais ce n'est pas obligatoire
+            std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+        
     }
 }
+
 
 

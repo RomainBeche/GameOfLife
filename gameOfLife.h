@@ -13,10 +13,10 @@ using std::string;
 class GameOfLife {
 private:
     int mode;
-    Grid grid;
+    Grid* grid;
     Display* display;
     sf::RenderWindow* window;
-    File file;
+    File* file;
     int delay;
     int maxGenerations;
     int generation;
@@ -35,4 +35,5 @@ public:
 private:
     bool checkStability();
 };
+
 

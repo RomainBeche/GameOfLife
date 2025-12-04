@@ -1,10 +1,11 @@
 #include "gameOfLife.h"
+#include "grid.h"
 
 GameOfLife::GameOfLife()
     : mode(0),          
       grid(),           
       display(nullptr),
-      window(),
+      window(nullptr),
       file(),
       delay(0),
       maxGenerations(0),
@@ -41,6 +42,10 @@ bool GameOfLife::checkStability() {
     else {
         return false;
     }
+}
+
+void GameOfLife::setToric(bool toric) {
+grid->setToric(Toric);
 }
     
 void GameOfLife::start() {
@@ -83,4 +88,5 @@ void GameOfLife::start() {
         //    (par exemple avec std::this_thread::sleep_for), mais ce n'est pas obligatoire
     }
 }
+
 

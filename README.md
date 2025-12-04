@@ -88,6 +88,17 @@ Example with a flicker:
 00000
 ```
 
+### Grid Testing
+In the context of our project, we were tasked to implement a way of testing the grid class. To address this concern, we added a separate ```GridTests``` executable in the ```CMakeLists.txt``` specifically for grid testing purposes.
+
+To run this executable:
+```
+cd build
+cmake ..
+make ./GridTests
+./GridTests
+```
+
 ### Troubleshooting
 
 **CMake version too old**

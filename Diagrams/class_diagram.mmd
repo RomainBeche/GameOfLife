@@ -6,28 +6,6 @@ config:
 ---
 classDiagram
 direction TB
-    class CellState {
-	    +isAlive() bool*
-	    +clone() CellState**
-	    +toChar() char*
-    }
-
-    class AliveState {
-	    +isAlive() bool
-	    +clone() CellState*
-	    +toChar() char
-    }
-
-    class DeadState {
-	    +isAlive() bool
-	    +clone() CellState*
-	    +toChar() char
-    }
-
-    class ConwayRuleSet {
-	    +calculateNextState(currentlyAlive: bool, neighbors: int) CellState*
-    }
-
     class File {
 	    -inputFile: string
 	    -outputFolder: string
@@ -35,12 +13,12 @@ direction TB
 	    +setInputFile(filename: string)
 	    +createOutputFolder()
 	    +writeFile(grid: Grid, generation: int)
-	    +readGrid(ruleSet: RuleSet*) Grid
+	    +readGrid(ruleSet: RuleSet#42;) Grid
     }
 
     class GridTester {
-	    +testGrid(initialGrid: Grid, expectedGrid: Grid, iterations: int) bool$
-	    +runAllTests() void$
+	    +testGrid(initialGrid: Grid, expectedGrid: Grid, iterations: int) bool
+	    +runAllTests() void
     }
 
     class ConsoleDisplay {
@@ -51,31 +29,11 @@ direction TB
 	    +handleEvents() void
     }
 
-    class GraphicalDisplay {
-	    -cellSize: int
-	    -window: RenderWindow*
-	    -delay: int
-	    +GraphicalDisplay(width: int, height: int, cellSize: int)
-	    +~GraphicalDisplay()
-	    +displayGrid(grid: Grid&) void
-	    +setDelay(ms: int)
-	    +isOpen() bool
-	    +handleEvents() void
-	    +getWindow() RenderWindow*
-    }
-
-    class Display {
-	    +displayGrid(grid: Grid&) void*
-	    +isOpen() bool*
-	    +handleEvents() void*
-	    +~Display()
-    }
-
     class GameOfLife {
 	    -mode: int
 	    -grid: Grid
-	    -display: Display*
-	    -window: RenderWindow*
+	    -display: Display#42;
+	    -window: RenderWindow#42;
 	    -file: File
 	    -delay: int
 	    -maxGenerations: int
@@ -92,14 +50,9 @@ direction TB
 	    -checkStability() bool
     }
 
-    class RuleSet {
-	    +~RuleSet()
-	    +calculateNextState(currentlyAlive: bool, neighbors: int) CellState**
-    }
-
     class Cell {
-	    -state: CellState*
-	    -nextState: CellState*
+	    -state: CellState#42;
+	    -nextState: CellState#42;
 	    -fixed: bool
 	    -x: int
 	    -y: int
@@ -107,13 +60,13 @@ direction TB
 	    +Cell(x: int, y: int)
 	    +~Cell()
 	    +initialize(x: int, y: int)
-	    +setState(state: CellState*)
-	    +prepareNextState(state: CellState*)
+	    +setState(state: CellState#42;)
+	    +prepareNextState(state: CellState#42;)
 	    +applyNextState()
 	    +isAlive() bool
 	    +getX() int
 	    +getY() int
-	    +getState() CellState*
+	    +getState() CellState#42;
 	    +setFixed(fixed: bool)
 	    +isFixed() bool
     }
@@ -123,7 +76,7 @@ direction TB
 	    -height: size_t
 	    -cells: vector~Cell~
 	    -toric: bool
-	    -ruleSet: RuleSet*
+	    -ruleSet: RuleSet#42;
 	    +Grid()
 	    +Grid(width: size_t, height: size_t, RuleSet* rules)
 	    +Grid(other: Grid&)
@@ -141,9 +94,57 @@ direction TB
 	    +setRuleSet(rules: RuleSet*)
     }
 
-	<<abstract>> CellState
-	<<abstract>> Display
+    class RuleSet {
+	    +~RuleSet()
+	    +calculateNextState(currentlyAlive: bool, neighbors: int) CellState#42;
+    }
+
+    class ConwayRuleSet {
+	    +calculateNextState(currentlyAlive: bool, neighbors: int) CellState#42;
+    }
+
+    class GraphicalDisplay {
+	    -cellSize: int
+	    -window: RenderWindow#42;
+	    -delay: int
+	    +GraphicalDisplay(width: int, height: int, cellSize: int)
+	    +~GraphicalDisplay()
+	    +displayGrid(grid: Grid&) void
+	    +setDelay(ms: int)
+	    +isOpen() bool
+	    +handleEvents() void
+	    +getWindow() RenderWindow#42;
+    }
+
+    class Display {
+	    +displayGrid(grid: Grid&) void#42;
+	    +isOpen() bool#42;
+	    +handleEvents() void#42;
+	    +~Display()
+    }
+
+    class DeadState {
+	    +isAlive() bool
+	    +clone() CellState#42;
+	    +toChar() char
+    }
+
+    class AliveState {
+	    +isAlive() bool
+	    +clone() CellState#42;
+	    +toChar() char
+    }
+
+    class CellState {
+	    +isAlive() bool
+	    +clone() CellState#42;
+	    +toChar() char
+        +~CellState()        
+    }
+
 	<<abstract>> RuleSet
+	<<abstract>> Display
+	<<abstract>> CellState
 
     GameOfLife o-- Grid : manages
     GameOfLife o-- Display : uses

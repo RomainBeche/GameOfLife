@@ -101,7 +101,8 @@ GameOfLife/
 │   ├── glider.txt
 │   ├── toad.txt
 │   ├── beacon.txt
-│   └── lwss.txt               # Lightweight spaceship
+│   ├── lwss.txt               # Lightweight spaceship
+│   └── soup.txt               # Random soup
 │
 └── build/                      # Build directory (created during build)
     ├── GameOfLife             # Main executable
@@ -214,7 +215,7 @@ make
 ### Command-Line Arguments
 
 ```
-./GameOfLife <input_file> [options]
+./GameOfLife <../patters/input_file> [options]
 ```
 
 #### Required Arguments
@@ -234,10 +235,10 @@ make
 
 ```bash
 # Basic console simulation
-./GameOfLife blinker.txt --mode 0
+./GameOfLife ../patters/blinker.txt --mode 0
 
 # Console mode with slower speed and generation limit
-./GameOfLife glider.txt --mode 0 --delay 1000 --max-gen 50
+./GameOfLife ../patters/glider.txt --mode 0 --delay 1000 --max-gen 50
 ```
 
 **Console Output Example:**
@@ -257,13 +258,13 @@ Generation 2:
 
 ```bash
 # Basic graphical simulation
-./GameOfLife glider.txt --mode 1
+./GameOfLife ../patters/glider.txt --mode 1
 
 # Graphical mode with custom cell size and speed
-./GameOfLife flicker.txt --mode 1 --cell-size 8 --delay 200
+./GameOfLife ../patters/flicker.txt --mode 1 --cell-size 8 --delay 200
 
 # Large grid with small cells
-./GameOfLife glider.txt --mode 1 --cell-size 5 --delay 50 --max-gen 1000
+./GameOfLife ../patters/glider.txt --mode 1 --cell-size 5 --delay 50 --max-gen 1000
 ```
 
 ## Input File Format
@@ -323,7 +324,7 @@ Create `beacon.txt`:
 
 - **Encoding**: UTF-8 (plain text)
 - **Grid size**: At least 10x10
-- **Location**: Place pattern files in the `build` directory or specify full path
+- **Location**: Place pattern files in the `patters` directory or specify full path
 - **Whitespace**: No spaces between digits; newline after each row
 
 ## Testing

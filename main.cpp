@@ -7,46 +7,48 @@
 #include "consoleDisplay.h"
 #include "graphicalDisplay.h"
 
+using std::cerr, std::cout, std::endl, std::stoi, std::exception;
+
 void printUsage() {
-    std::cout << "Usage: ./exec <input_file> [options]" << std::endl;
-    std::cout << "Options:" << std::endl;
-    std::cout << "  --mode <0|1>        0=console (default), 1=graphical" << std::endl;
-    std::cout << "  --toric <0|1>       0=non-toric (default), 1=toric" << std::endl;
-    std::cout << "  --delay <ms>        Delay between iterations (default: 100ms)" << std::endl;
-    std::cout << "  --max-gen <n>       Maximum generations (default: 1000)" << std::endl;
-    std::cout << "  --cell-size <n>     Cell size in pixels for graphical mode (default: 10)" << std::endl;
+    cout << "Usage: ./exec <input_file> [options]" << endl;
+    cout << "Options:" << endl;
+    cout << "  --mode <0|1>        0: console (default), 1: graphical" << endl;
+    cout << "  --toric <0|1>       0: non-toric (default), 1: toric" << endl;
+    cout << "  --delay <ms>        Delay between iterations (default: 500ms)" << endl;
+    cout << "  --max-gen <n>       Maximum generations (default: 1000)" << endl;
+    cout << "  --cell-size <n>     Cell size in pixels for graphical mode (default: 10)" << endl;
 }
 
 int main(int argc, char* argv[]) {
     // Check minimum arguments
     if (argc < 2) {
-        std::cerr << "Error: Input file required!" << std::endl;
+        cerr << "Error: Input file required!" << endl;
         printUsage();
         return 1;
     }
     
     // Parse command line arguments
-    std::string inputFile = argv[1];
-    int mode = 0;           // 0 = console, 1 = graphical
+    string inputFile = argv[1];
+    int mode = 0;
     bool toric = false;
-    int delay = 100;
+    int delay = 500;
     int maxGen = 1000;
     int cellSize = 10;
     
     // Parse optional arguments
     for (int i = 2; i < argc - 1; i += 2) {
-        std::string arg = argv[i];
+        string arg = argv[i];
         
         if (arg == "--mode") {
-            mode = std::stoi(argv[i + 1]);
+            mode = stoi(argv[i + 1]);
         } else if (arg == "--toric") {
-            toric = (std::stoi(argv[i + 1]) == 1);
+            toric = (stoi(argv[i + 1]) == 1);
         } else if (arg == "--delay") {
-            delay = std::stoi(argv[i + 1]);
+            delay = stoi(argv[i + 1]);
         } else if (arg == "--max-gen") {
-            maxGen = std::stoi(argv[i + 1]);
+            maxGen = stoi(argv[i + 1]);
         } else if (arg == "--cell-size") {
-            cellSize = std::stoi(argv[i + 1]);
+            cellSize = stoi(argv[i + 1]);
         }
     }
     
@@ -67,29 +69,28 @@ int main(int argc, char* argv[]) {
         
         if (mode == 0) {
             // Console mode
-            std::string outputFolder = inputFile + "_out";
+            string outputFolder = inputFile + "_out";
             display = new ConsoleDisplay(outputFolder);
-            std::cout << "Running in console mode. Output folder: " << outputFolder << std::endl;
+            cout << "Running in console mode. Output folder: " << outputFolder << endl;
         } else if (mode == 1){
             // Graphical mode
-            std::cout << "Grid dimensions: " << grid.getWidth() << "x" << grid.getHeight() << std::endl;
-            std::cout << "Cell size: " << cellSize << std::endl;
-            std::cout << "Window will be: " << (grid.getWidth() * cellSize) << "x" << (grid.getHeight() * cellSize) << " pixels" << std::endl;
+            cout << "Grid dimensions: " << grid.getWidth() << "x" << grid.getHeight() << endl;
+            cout << "Cell size: " << cellSize << endl;
+            cout << "Window will be: " << (grid.getWidth() * cellSize) << "x" << (grid.getHeight() * cellSize) << " pixels" << endl;
             
             display = new GraphicalDisplay(
                 grid.getWidth(), 
                 grid.getHeight(), 
                 cellSize
             );
+
             if (display != nullptr) {
                 // Set delay for graphical display
                 GraphicalDisplay* graphDisplay = dynamic_cast<GraphicalDisplay*>(display);
-                if (graphDisplay) {
-                    graphDisplay->setDelay(delay);
-                }
+                if (graphDisplay) graphDisplay->setDelay(delay);
             }
-            std::cout << "Running in graphical mode. Cell size: " << cellSize << "px" << std::endl;
-        } else { throw std::invalid_argument("Invalid mode"); }
+            cout << "Running in graphical mode. Cell size: " << cellSize << "px" << endl;
+        } else { throw invalid_argument("Invalid mode"); }
         
         // Create and configure GameOfLife
         GameOfLife* game = new GameOfLife();
@@ -110,10 +111,10 @@ int main(int argc, char* argv[]) {
         delete file;
         delete ruleSet;
         
-        std::cout << "Game of Life completed successfully!" << std::endl;
+        cout << "Game of Life completed successfully!" << endl;
         
-    } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+    } catch (const exception& e) {
+        cerr << "Error: " << e.what() << endl;
         return 1;
     }
     

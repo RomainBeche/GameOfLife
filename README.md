@@ -56,44 +56,44 @@ GameOfLife/
 ├── src/                        # Source files
 │   ├── main.cpp               # Entry point
 │   │
-│   ├── GameOfLife.cpp         # Main game controller
-│   ├── File.cpp               # File I/O handler
+│   ├── gameOfLife.cpp         # Main game controller
+│   ├── file.cpp               # File I/O handler
 │   │
-│   ├── Grid.cpp               # Grid management
-│   ├── Cell.cpp               # Individual cell logic
+│   ├── grid.cpp               # Grid management
+│   ├── cell.cpp               # Individual cell logic
 │   │
-│   ├── Display.cpp            # Abstract display base
-│   ├── ConsoleDisplay.cpp     # Console visualization
-│   ├── GraphicalDisplay.cpp   # SFML graphical visualization
+│   ├── display.cpp            # Abstract display base
+│   ├── consoleDisplay.cpp     # Console visualization
+│   ├── graphicalDisplay.cpp   # SFML graphical visualization
 │   │
-│   ├── CellState.cpp          # Abstract state base
-│   ├── AliveState.cpp         # Alive cell state
-│   ├── DeadState.cpp          # Dead cell state
+│   ├── cellState.cpp          # Abstract state base
+│   ├── aliveState.cpp         # Alive cell state
+│   ├── deadState.cpp          # Dead cell state
 │   │
-│   ├── RuleSet.cpp            # Abstract rule base
-│   └── ConwayRuleSet.cpp      # Conway's Game of Life rules
+│   ├── ruleSet.cpp            # Abstract rule base
+│   └── conwayRuleSet.cpp      # Conway's Game of Life rules
 │
 ├── include/                    # Header files
-│   ├── GameOfLife.h
-│   ├── File.h
+│   ├── gameOfLife.h
+│   ├── file.h
 │   │
-│   ├── Grid.h
-│   ├── Cell.h
+│   ├── grid.h
+│   ├── cell.h
 │   │
-│   ├── Display.h
-│   ├── ConsoleDisplay.h
-│   ├── GraphicalDisplay.h
+│   ├── display.h
+│   ├── consoleDisplay.h
+│   ├── graphicalDisplay.h
 │   │
-│   ├── CellState.h
-│   ├── AliveState.h
-│   ├── DeadState.h
+│   ├── cellState.h
+│   ├── aliveState.h
+│   ├── deadState.h
 │   │
-│   ├── RuleSet.h
-│   └── ConwayRuleSet.h
+│   ├── ruleSet.h
+│   └── conwayRuleSet.h
 │
 ├── tests/                      # Test files
-│   ├── GridTests.cpp          # Main test runner
-│   ├── GridTester.cpp         # Grid testing implementation
+│   ├── gridTests.cpp          # Main test runner
+│   ├── gridTester.cpp         # Grid testing implementation
 │   └── gridTester.h           # Grid tester interface
 │
 ├── patterns/                   # Example pattern files

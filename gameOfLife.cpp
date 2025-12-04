@@ -41,6 +41,7 @@ bool GameOfLife::checkStability() {
     else {
         return false;
     }
+}
     
 void GameOfLife::start() {
 
@@ -82,3 +83,4 @@ void GameOfLife::start() {
         //    (par exemple avec std::this_thread::sleep_for), mais ce n'est pas obligatoire
     }
 }
+

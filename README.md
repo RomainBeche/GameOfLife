@@ -38,7 +38,7 @@ This object-oriented programming project consists of designing and then implemen
     make
     ```
 
-Place the glider.txt or flicker.txt in the build directory or [create your own input.txt file](Input File Format)
+Place the glider.txt or flicker.txt in the build directory or [create your own input.txt file](#Input-File-Format)
     
 Then, run the simulation (example):
 

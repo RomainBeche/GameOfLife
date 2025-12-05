@@ -35,7 +35,7 @@ target_link_libraries(GameOfLife PRIVATE sfml-graphics sfml-window sfml-system)
 
 # Separate executable for grid testing
 add_executable(GridTests 
-    test.cpp
+    gridTests.cpp
     gridTester.cpp
     grid.cpp
     cell.cpp

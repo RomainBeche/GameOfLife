@@ -18,7 +18,7 @@ void File::setInputFile(const string& filename) {
     inputFile = filename;
 
     path inputPath(filename);
-    path baseOutputPath = "../OutputFiles/";
+    path baseOutputPath = "../outputFiles/";
     string fileStem = inputPath.stem().string();
 
     outputFolder = (baseOutputPath / (fileStem + "_out")).string();

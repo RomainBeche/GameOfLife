@@ -126,9 +126,13 @@ size_t Grid::countNeighbors(int x, int y) {
 }
 
 // Cell getter
-Cell& Grid::getCell(int x, int y) { 
-    size_t index = y*width+x;
-    return cells[index]; 
+Cell& Grid::getCell(int x, int y) {
+    if (x < 0 || x >= (int)width || y < 0 || y >= (int)height) {
+        throw std::out_of_range("Cell coordinates out of bounds: (" + 
+                                std::to_string(x) + "," + std::to_string(y) + ")");
+    }
+    size_t index = y * width + x;
+    return cells[index];
 }
 
 // Grid size getters

@@ -147,7 +147,7 @@ string Grid::textGrid() {
     for (size_t y = 0; y < height; y++) {
         for (size_t x = 0; x < width; x++) {
             size_t index = y*width+x;
-            grid.append(1, cells[index].isAlive());
+            grid.append(1, cells[index].isAlive() ? '1' : '0');
         }
         grid.append("\n");
     }

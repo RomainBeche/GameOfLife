@@ -11,14 +11,22 @@
 using namespace std::filesystem;
 using std::ostringstream, std::runtime_error, std::ofstream, std::ifstream, std::vector;
 
-File::File() : inputFile(""), outputFolder("output") {}
+File::File() : inputFile(""), outputFolder("") {}
 
 // Set the input file path
-void File::setInputFile(const string& filename) { inputFile = filename; }
+void File::setInputFile(const string& filename) {
+    inputFile = filename;
+
+    path inputPath(filename);
+    path baseOutputPath = "../OutputFiles/";
+    string fileStem = inputPath.stem().string();
+
+    outputFolder = (baseOutputPath / (fileStem + "_out")).string();
+}
 
 // Create the output folder if it doesn't exist
 void File::createOutputFolder() {
-    if (outputFolder.empty()) outputFolder = "output";
+    if (outputFolder.empty()) outputFolder = "";
     if (!exists(outputFolder)) create_directories(outputFolder);
 }
 

@@ -1,6 +1,6 @@
 #include "consoleDisplay.h"
 
-ConsoleDisplay::ConsoleDisplay(const std::string& folder) : outputFolder(folder) {} // Constructor
+ConsoleDisplay::ConsoleDisplay(const string& folder) : outputFolder(folder) {} // Constructor
 
 // Display the grid using textGrid() method
 void ConsoleDisplay::displayGrid(Grid& grid) {} // No grid to display in console

@@ -71,9 +71,10 @@ int main(int argc, char* argv[]) {
             // Console mode
             string outputFolder = inputFile + "_out";
             display = new ConsoleDisplay(outputFolder);
-            cout << "Running in console mode. Output folder: " << outputFolder << endl;
+            cout << "Starting GameOfLife in console mode. Output folder: " << outputFolder << endl;
         } else if (mode == 1){
             // Graphical mode
+            cout << "Starting GameOfLife in graphical mode." << endl;
             cout << "Grid dimensions: " << grid.getWidth() << "x" << grid.getHeight() << endl;
             cout << "Cell size: " << cellSize << endl;
             cout << "Window will be: " << (grid.getWidth() * cellSize) << "x" << (grid.getHeight() * cellSize) << " pixels" << endl;
@@ -89,7 +90,6 @@ int main(int argc, char* argv[]) {
                 GraphicalDisplay* graphDisplay = dynamic_cast<GraphicalDisplay*>(display);
                 if (graphDisplay) graphDisplay->setDelay(delay);
             }
-            cout << "Running in graphical mode. Cell size: " << cellSize << "px" << endl;
         } else { throw invalid_argument("Invalid mode"); }
         
         // Create and configure GameOfLife

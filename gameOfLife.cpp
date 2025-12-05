@@ -56,11 +56,6 @@ void GameOfLife::start() {
     generation = 0;
     previousGrid = "";
 
-    cout << "Starting Game of Life..." << endl;
-    cout << "Mode: " << (mode == 0 ? "Console" : "Graphical") << endl;
-    cout << "Grid size: " << grid->getWidth() << "x" << grid->getHeight() << endl;
-    cout << "Max generations: " << maxGenerations << endl;
-
     // Main loop
     while (display->isOpen()) {
         // Check termination conditions
@@ -80,11 +75,6 @@ void GameOfLife::start() {
         grid->update(); // Update grid to next generation
         
         generation++;   // Increment generation counter
-        
-        // Display progress (console mode)
-        if (mode == 0 && generation % 10 == 0) {
-            cout << "Generation: " << generation << endl;
-        }
     }
     
     cout << "Simulation ended at generation " << generation << endl;

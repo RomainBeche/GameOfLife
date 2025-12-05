@@ -66,7 +66,7 @@
         bool ok2 = testGrid(initial1, initial1, 2);
         cout << "Blinker test (2 iterations): " << (ok2 ? "OK" : "FAIL") << endl;
 
-        // Example test 2: 2x2 square
+        // Example test 2: block
         // 00000
         // 01100
         // 01100
@@ -82,7 +82,7 @@
         // Expected after 1 iteration is the same as initial
 
         bool ok3 = testGrid(initial2, initial2, 1);
-        cout << "2x2 square test (1 iteration): " << (ok3 ? "OK" : "FAIL") << endl;
+        cout << "Block test (1 iteration): " << (ok3 ? "OK" : "FAIL") << endl;
 
         // Example test 3: lightweight spaceship in a toric grid
         // 00000000

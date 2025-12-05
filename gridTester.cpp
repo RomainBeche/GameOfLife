@@ -47,7 +47,7 @@ bool GridTester::testGrid(Grid& initialGrid, Grid& expectedGrid, int iterations)
 
 void GridTester::runAllTests() {
     cout << "\n========================================" << endl;
-    cout << "  GAME OF LIFE - UNIT TESTS" << endl;
+    cout << "       GAME OF LIFE - UNIT TESTS        " << endl;
     cout << "========================================\n" << endl;
 
     ConwayRuleSet rules;
@@ -214,7 +214,7 @@ void GridTester::runAllTests() {
     // ===================================== ERROR HANDLING TESTS =====================================
 
     cout << "========================================" << endl;
-    cout << "  ERROR HANDLING TESTS" << endl;
+    cout << "          ERROR HANDLING TESTS          " << endl;
     cout << "========================================\n" << endl;
 
     // TEST 6: Invalid Grid Size (0x0)
@@ -317,17 +317,17 @@ void GridTester::runAllTests() {
     // ======================================== FINAL SUMMARY ========================================
 
     cout << "========================================" << endl;
-    cout << "  TEST SUMMARY" << endl;
+    cout << "              TEST SUMMARY              " << endl;
     cout << "========================================" << endl;
-    cout << "  Total Tests: " << totalTests << endl;
-    cout << "  Passed:      " << passedTests << endl;
-    cout << "  Failed:      " << (totalTests - passedTests) << endl;
-    cout << "  Success Rate: " << (passedTests * 100 / totalTests) << "%" << endl;
+    cout << "       Total Tests: " << totalTests << endl;
+    cout << "       Passed:      " << passedTests << endl;
+    cout << "       Failed:      " << (totalTests - passedTests) << endl;
+    cout << "       Success Rate: " << (passedTests * 100 / totalTests) << "%" << endl;
     cout << "========================================\n" << endl;
 
     if (passedTests == totalTests) {
         cout << "ALL TESTS PASSED!\n" << endl;
     } else {
-        cout << "SOME TESTS FAILED\n" << endl;
+        cout << "SOME TESTS FAILED...\n" << endl;
     }
 }

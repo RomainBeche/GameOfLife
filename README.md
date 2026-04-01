@@ -323,7 +323,7 @@ Create `beacon.txt`:
 ### File Guidelines
 
 - **Encoding**: UTF-8 (plain text)
-- **Grid size**: At least 10x10
+- **Grid size**: For optimal performance, at least 10x10 and at most 100x100
 - **Location**: Place pattern files in the `patters` directory or specify full path
 - **Whitespace**: No spaces between digits; newline after each row
 
